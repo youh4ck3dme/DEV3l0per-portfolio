@@ -1,0 +1,63 @@
+Act as a Senior React & Three.js Developer. Create a high-end, "Black-on-Black" aesthetic Footer component for a developer portfolio.
+
+**Design Requirements:**
+- Background: Deep Black (#050505 to #000000).
+- Typography: Monospace/Tech font (e.g., 'Courier New', 'Roboto Mono').
+- Vibe: Cyberpunk, High-tech, Sleek, Minimalist but detailed.
+- Structure: The main part of the footer is the "Card Scanner Animation". Below that, simple social links and copyright.
+
+**Core Feature: The Infinite Card Scanner**
+Implement a visual effect where "Credit Cards" scroll infinitely horizontally.
+- Use a central "Scanner Beam" (Canvas 2D) that glows cyan/blue.
+- When a card passes under the scanner:
+  1. The "Normal" card visual is clipped/hidden.
+  2. The "ASCII" matrix code version of the card is revealed (visualized using a masking/clip-path technique).
+- Background: Subtle Three.js particle system floating behind the cards.
+
+**Card Data (Crucial - Use these exact details):**
+Replace generic images with CSS-styled cards using gradients. Use this specific humorous data for the cards:
+
+1. **Card: "The Excuse"**
+   - Logo: LOCALHOST_BANK
+   - Number: HTTP 200 404 500 418
+   - Holder: WORKS ON MY MACHINE
+   - Expiry: WHEN_DEPLOYED
+   - Color: Gradient (Blue/Dark Blue)
+
+2. **Card: "Git Struggle"**
+   - Logo: GIT_COMMIT_LTD
+   - Number: a1b2 c3d4 e5f6 HEAD
+   - Holder: MERGE CONFLICT SURVIVOR
+   - Expiry: FORCE_PUSH
+   - Color: Gradient (Dark Gray/Black)
+
+3. **Card: "Tech Stack"**
+   - Logo: REACT_NATIVE_UNION
+   - Number: USE EFFECT HOOK ARRAY
+   - Holder: COMPONENT ARCHITECT
+   - Expiry: V 18.2.0
+   - Color: Gradient (Purple/Cyan)
+
+4. **Card: "Caffeine"**
+   - Logo: CAFFEINE_OS
+   - Number: C0FF EE00 DEAD BEEF
+   - Holder: CODE GENERATOR
+   - Expiry: 03:00 AM
+   - Color: Gradient (Gold/Brown)
+
+5. **Card: "Hire Me"**
+   - Logo: OPEN_TO_WORK
+   - Number: [Insert Fake Phone Number Format]
+   - Holder: YOUR FUTURE SENIOR DEV
+   - Expiry: ASAP
+   - Color: Gradient (Green/Black)
+
+**Technical Implementation:**
+- Use `useRef` for DOM manipulation (no `document.getElementById`).
+- Ensure `useEffect` handles cleanup (remove event listeners, cancel animation frames) to prevent memory leaks in React.
+- Style using a separate CSS file (`FooterScanner.css`) or styled-components.
+- The Card Stream logic should be encapsulated in a Controller class or hook within the component to manage the infinite scroll physics and clip-path calculations.
+
+**Deliverable:**
+1. `Footer.jsx` (Complete React component).
+2. `Footer.css` (Complete styling).
