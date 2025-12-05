@@ -1,8 +1,16 @@
-import { useRef, useMemo } from 'react';
-import { Canvas, useFrame } from '@react-three/fiber';
-import { Points, PointMaterial } from '@react-three/drei';
-import * as THREE from 'three';
+import { useRef, useMemo } from "react";
+import { Canvas, useFrame } from "@react-three/fiber";
+import { Points, PointMaterial } from "@react-three/drei";
+import * as THREE from "three";
 
+/**
+ * Particles component that renders animated 3D particle points.
+ * Creates a field of rotating particles using Three.js and React Three Fiber.
+ *
+ * @param {Object} props - Component props
+ * @param {number} [props.count=2000] - Number of particles to render
+ * @returns {JSX.Element} Three.js Points component with animated particles
+ */
 function Particles({ count = 2000 }: { count?: number }) {
   const ref = useRef<THREE.Points>(null);
 
@@ -41,12 +49,25 @@ interface ParticleBackgroundProps {
   className?: string;
 }
 
-export default function ParticleBackground({ className = '' }: ParticleBackgroundProps) {
+/**
+ * ParticleBackground component that provides an animated particle background.
+ * Wraps a Three.js Canvas with rotating particles for visual effect.
+ *
+ * @param {ParticleBackgroundProps} props - Component props
+ * @param {string} [props.className=''] - Additional CSS classes for styling
+ * @returns {JSX.Element} A div containing the Three.js canvas with particles
+ */
+export default function ParticleBackground({
+  className = "",
+}: ParticleBackgroundProps) {
   return (
-    <div className={`absolute inset-0 ${className}`} data-testid="particle-background">
+    <div
+      className={`absolute inset-0 ${className}`}
+      data-testid="particle-background"
+    >
       <Canvas
         camera={{ position: [0, 0, 5], fov: 75 }}
-        style={{ background: 'transparent' }}
+        style={{ background: "transparent" }}
         gl={{ alpha: true, antialias: true }}
       >
         <Particles />

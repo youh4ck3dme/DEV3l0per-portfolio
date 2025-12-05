@@ -1,4 +1,5 @@
-import { motion } from 'framer-motion';
+import React, { memo, useMemo } from "react";
+import { motion } from "framer-motion";
 
 export interface CardData {
   id: string;
@@ -15,12 +16,21 @@ interface CreditCardProps {
   isScanned?: boolean;
 }
 
-export default function CreditCard({ card, isScanned = false }: CreditCardProps) {
-  const asciiChars = '01@#$%&*!?<>[]{}|/\\';
+const CreditCard = memo(function CreditCard({
+  card,
+  isScanned = false,
+}: CreditCardProps) {
+  const asciiChars = useMemo(() => "01@#$%&*!?<>[]{}|/\\", []);
 
-  const generateAsciiMatrix = (text: string) => {
-    return text.split('').map(() => asciiChars[Math.floor(Math.random() * asciiChars.length)]).join('');
-  };
+  const generateAsciiMatrix = useMemo(
+    () => (text: string) => {
+      return text
+        .split("")
+        .map(() => asciiChars[Math.floor(Math.random() * asciiChars.length)])
+        .join("");
+    },
+    [asciiChars]
+  );
 
   return (
     <motion.div
@@ -30,7 +40,7 @@ export default function CreditCard({ card, isScanned = false }: CreditCardProps)
     >
       <div
         className={`absolute inset-0 p-6 border border-[rgba(255,255,255,0.08)] transition-opacity duration-300 ${
-          isScanned ? 'opacity-0' : 'opacity-100'
+          isScanned ? "opacity-0" : "opacity-100"
         }`}
         style={{ background: card.gradient }}
       >
@@ -67,7 +77,7 @@ export default function CreditCard({ card, isScanned = false }: CreditCardProps)
 
       <div
         className={`absolute inset-0 p-6 bg-[#0A0A0A] border border-[#00FFFF] transition-opacity duration-300 overflow-hidden ${
-          isScanned ? 'opacity-100' : 'opacity-0'
+          isScanned ? "opacity-100" : "opacity-0"
         }`}
       >
         <div className="absolute inset-0 opacity-20">
@@ -116,4 +126,6 @@ export default function CreditCard({ card, isScanned = false }: CreditCardProps)
       </div>
     </motion.div>
   );
-}
+});
+
+export default CreditCard;

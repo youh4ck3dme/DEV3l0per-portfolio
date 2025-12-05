@@ -1,19 +1,31 @@
-import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Download, X, Terminal } from 'lucide-react';
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Download, X, Terminal } from "lucide-react";
 
+/**
+ * Interface extending the Event for PWA install prompt.
+ * Represents the beforeinstallprompt event with additional methods.
+ */
 interface BeforeInstallPromptEvent extends Event {
   prompt: () => Promise<void>;
-  userChoice: Promise<{ outcome: 'accepted' | 'dismissed' }>;
+  userChoice: Promise<{ outcome: "accepted" | "dismissed" }>;
 }
 
+/**
+ * InstallPrompt component that handles PWA installation prompts.
+ * Displays a modal to install the app as a PWA after a delay.
+ * Manages the beforeinstallprompt event and user interactions.
+ *
+ * @returns {JSX.Element | null} An animated install prompt modal or null if already installed
+ */
 export default function InstallPrompt() {
-  const [deferredPrompt, setDeferredPrompt] = useState<BeforeInstallPromptEvent | null>(null);
+  const [deferredPrompt, setDeferredPrompt] =
+    useState<BeforeInstallPromptEvent | null>(null);
   const [showPrompt, setShowPrompt] = useState(false);
   const [isInstalled, setIsInstalled] = useState(false);
 
   useEffect(() => {
-    if (window.matchMedia('(display-mode: standalone)').matches) {
+    if (window.matchMedia("(display-mode: standalone)").matches) {
       setIsInstalled(true);
       return;
     }
@@ -21,14 +33,14 @@ export default function InstallPrompt() {
     const handleBeforeInstall = (e: Event) => {
       e.preventDefault();
       setDeferredPrompt(e as BeforeInstallPromptEvent);
-      
+
       setTimeout(() => setShowPrompt(true), 5000);
     };
 
-    window.addEventListener('beforeinstallprompt', handleBeforeInstall);
+    window.addEventListener("beforeinstallprompt", handleBeforeInstall);
 
     return () => {
-      window.removeEventListener('beforeinstallprompt', handleBeforeInstall);
+      window.removeEventListener("beforeinstallprompt", handleBeforeInstall);
     };
   }, []);
 
@@ -38,7 +50,7 @@ export default function InstallPrompt() {
     deferredPrompt.prompt();
     const { outcome } = await deferredPrompt.userChoice;
 
-    if (outcome === 'accepted') {
+    if (outcome === "accepted") {
       setIsInstalled(true);
     }
 
@@ -82,13 +94,15 @@ export default function InstallPrompt() {
                 onClick={handleDismiss}
                 className="text-[#888888] hover:text-[#EDEDED] transition-colors"
                 data-testid="button-dismiss-install"
+                aria-label="Dismiss install prompt"
               >
                 <X className="w-4 h-4" />
               </button>
             </div>
 
             <p className="font-mono text-xs text-[#888888] mb-4">
-              Install ./d3v3l0p3r as an app for faster access and offline support.
+              Install ./d3v3l0p3r as an app for faster access and offline
+              support.
             </p>
 
             <div className="flex gap-2">

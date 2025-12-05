@@ -1,25 +1,32 @@
-import { useRef, useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
-import ParticleBackground from './ParticleBackground';
+import { useRef, useEffect, useState, useCallback } from "react";
+import { motion } from "framer-motion";
+import ParticleBackground from "./ParticleBackground";
 
+/**
+ * HeroSection component that renders the main hero section of the portfolio.
+ * Features interactive mouse tracking, animated text, call-to-action buttons,
+ * and statistics display with particle background.
+ *
+ * @returns {JSX.Element} The hero section with animations and interactive elements
+ */
 export default function HeroSection() {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const containerRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      if (containerRef.current) {
-        const rect = containerRef.current.getBoundingClientRect();
-        setMousePos({
-          x: ((e.clientX - rect.left) / rect.width) * 100,
-          y: ((e.clientY - rect.top) / rect.height) * 100,
-        });
-      }
-    };
-
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
+  const handleMouseMove = useCallback((e: MouseEvent) => {
+    if (containerRef.current) {
+      const rect = containerRef.current.getBoundingClientRect();
+      setMousePos({
+        x: ((e.clientX - rect.left) / rect.width) * 100,
+        y: ((e.clientY - rect.top) / rect.height) * 100,
+      });
+    }
   }, []);
+
+  useEffect(() => {
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
+  }, [handleMouseMove]);
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -93,7 +100,7 @@ export default function HeroSection() {
           <motion.button
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
-            onClick={() => console.log('View Projects clicked')}
+            onClick={() => console.log("View Projects clicked")}
             className="px-8 py-3 font-mono text-sm uppercase tracking-widest bg-[#EDEDED] text-[#030303] border border-[#EDEDED] hover-elevate"
             data-testid="button-view-projects"
           >
@@ -102,7 +109,7 @@ export default function HeroSection() {
           <motion.button
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
-            onClick={() => console.log('Contact clicked')}
+            onClick={() => console.log("Contact clicked")}
             className="px-8 py-3 font-mono text-sm uppercase tracking-widest bg-transparent text-[#EDEDED] border border-[rgba(255,255,255,0.08)] hover-elevate"
             data-testid="button-contact-hero"
           >
@@ -115,19 +122,25 @@ export default function HeroSection() {
           className="mt-24 grid grid-cols-3 gap-8 max-w-md mx-auto"
         >
           <div className="text-center">
-            <div className="font-mono text-3xl font-bold text-[#EDEDED]">5+</div>
+            <div className="font-mono text-3xl font-bold text-[#EDEDED]">
+              5+
+            </div>
             <div className="font-mono text-xs uppercase tracking-widest text-[#444444] mt-1">
               YEARS EXP
             </div>
           </div>
           <div className="text-center">
-            <div className="font-mono text-3xl font-bold text-[#EDEDED]">50+</div>
+            <div className="font-mono text-3xl font-bold text-[#EDEDED]">
+              50+
+            </div>
             <div className="font-mono text-xs uppercase tracking-widest text-[#444444] mt-1">
               PROJECTS
             </div>
           </div>
           <div className="text-center">
-            <div className="font-mono text-3xl font-bold text-[#00FF00]">99%</div>
+            <div className="font-mono text-3xl font-bold text-[#00FF00]">
+              99%
+            </div>
             <div className="font-mono text-xs uppercase tracking-widest text-[#444444] mt-1">
               ON TIME
             </div>

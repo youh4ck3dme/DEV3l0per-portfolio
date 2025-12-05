@@ -1,7 +1,14 @@
-import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { WifiOff, Wifi } from 'lucide-react';
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { WifiOff, Wifi } from "lucide-react";
 
+/**
+ * OfflineIndicator component that displays the current online/offline status.
+ * Shows a notification banner when the network status changes, indicating
+ * whether the system is online or operating in offline/local mode.
+ *
+ * @returns {JSX.Element} An animated indicator banner or null when hidden
+ */
 export default function OfflineIndicator() {
   const [isOnline, setIsOnline] = useState(true);
   const [showIndicator, setShowIndicator] = useState(false);
@@ -20,12 +27,12 @@ export default function OfflineIndicator() {
       setShowIndicator(true);
     };
 
-    window.addEventListener('online', handleOnline);
-    window.addEventListener('offline', handleOffline);
+    window.addEventListener("online", handleOnline);
+    window.addEventListener("offline", handleOffline);
 
     return () => {
-      window.removeEventListener('online', handleOnline);
-      window.removeEventListener('offline', handleOffline);
+      window.removeEventListener("online", handleOnline);
+      window.removeEventListener("offline", handleOffline);
     };
   }, []);
 
@@ -39,8 +46,8 @@ export default function OfflineIndicator() {
           transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
           className={`fixed top-20 left-1/2 -translate-x-1/2 z-50 px-4 py-2 border ${
             isOnline
-              ? 'bg-[#00FF00]/10 border-[#00FF00]/30'
-              : 'bg-[#FF0000]/10 border-[#FF0000]/30'
+              ? "bg-[#00FF00]/10 border-[#00FF00]/30"
+              : "bg-[#FF0000]/10 border-[#FF0000]/30"
           }`}
           data-testid="offline-indicator"
         >
@@ -50,10 +57,14 @@ export default function OfflineIndicator() {
             ) : (
               <WifiOff className="w-4 h-4 text-[#FF0000]" />
             )}
-            <span className={`font-mono text-xs uppercase tracking-widest ${
-              isOnline ? 'text-[#00FF00]' : 'text-[#FF0000]'
-            }`}>
-              {isOnline ? 'SYSTEM ONLINE' : 'SYSTEM OFFLINE / LOCAL MODE ACTIVE'}
+            <span
+              className={`font-mono text-xs uppercase tracking-widest ${
+                isOnline ? "text-[#00FF00]" : "text-[#FF0000]"
+              }`}
+            >
+              {isOnline
+                ? "SYSTEM ONLINE"
+                : "SYSTEM OFFLINE / LOCAL MODE ACTIVE"}
             </span>
           </div>
         </motion.div>

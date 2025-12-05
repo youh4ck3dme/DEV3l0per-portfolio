@@ -17,11 +17,16 @@ app.use(
     verify: (req, _res, buf) => {
       req.rawBody = buf;
     },
-  }),
+  })
 );
 
 app.use(express.urlencoded({ extended: false }));
 
+/**
+ * Logs a message with timestamp and source prefix.
+ * @param {string} message - The message to log
+ * @param {string} [source="express"] - The source of the log message
+ */
 export function log(message: string, source = "express") {
   const formattedTime = new Date().toLocaleTimeString("en-US", {
     hour: "numeric",
@@ -66,15 +71,15 @@ app.use((req, res, next) => {
     const status = err.status || err.statusCode || 500;
     const message = err.message || "Internal Server Error";
 
+    log(`Error: ${message}`, "error");
     res.status(status).json({ message });
-    throw err;
   });
 
   // importantly only setup vite in development and after
   // setting up all the other routes so the catch-all route
   // doesn't interfere with the other routes
   if (process.env.NODE_ENV === "production") {
-    serveStatic(app);
+    await serveStatic(app);
   } else {
     const { setupVite } = await import("./vite");
     await setupVite(httpServer, app);
@@ -93,6 +98,6 @@ app.use((req, res, next) => {
     },
     () => {
       log(`serving on port ${port}`);
-    },
+    }
   );
 })();

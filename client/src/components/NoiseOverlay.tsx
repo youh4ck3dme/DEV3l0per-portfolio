@@ -1,5 +1,12 @@
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect } from "react";
 
+/**
+ * NoiseOverlay component that creates a subtle animated noise effect overlay.
+ * Renders a full-screen canvas with randomly generated noise pixels for visual texture.
+ * The noise is updated continuously using requestAnimationFrame for smooth animation.
+ *
+ * @returns {JSX.Element} A canvas element positioned as a fixed overlay
+ */
 export default function NoiseOverlay() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -7,7 +14,7 @@ export default function NoiseOverlay() {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    const ctx = canvas.getContext('2d');
+    const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
     const resize = () => {
@@ -16,7 +23,7 @@ export default function NoiseOverlay() {
     };
 
     resize();
-    window.addEventListener('resize', resize);
+    window.addEventListener("resize", resize);
 
     let animationId: number;
 
@@ -39,7 +46,7 @@ export default function NoiseOverlay() {
     drawNoise();
 
     return () => {
-      window.removeEventListener('resize', resize);
+      window.removeEventListener("resize", resize);
       cancelAnimationFrame(animationId);
     };
   }, []);
