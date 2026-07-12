@@ -6,11 +6,11 @@ A modern, responsive portfolio website showcasing development projects with cutt
 
 - **Responsive Design**: Mobile-first approach with Tailwind CSS
 - **3D Animations**: Interactive particle backgrounds using Three.js and React Three Fiber
-- **PWA Support**: Installable as a progressive web app with offline capabilities
+- **PWA Support**: Installable as a progressive web app
 - **Real-time Status**: Online/offline indicator with smooth animations
 - **Interactive Components**: Animated UI elements with Framer Motion
 - **Card Scanner**: Unique credential scanning animation
-- **Contact Integration**: Functional contact form
+- **Contact Integration**: Client-side contact form (backend integration planned)
 - **Project Showcase**: Dynamic project display with filtering
 
 ## 🛠️ Tech Stack
@@ -28,9 +28,9 @@ A modern, responsive portfolio website showcasing development projects with cutt
 ### Backend
 
 - **Express.js** with TypeScript
-- **PostgreSQL** database with Drizzle ORM
-- **Passport.js** for authentication
-- **WebSocket** support
+- In-memory storage for demo API routes (`/api/users`)
+- Drizzle ORM schema prepared for future PostgreSQL integration
+- WebSocket support (scaffolded)
 
 ### Development Tools
 
@@ -100,10 +100,10 @@ All tests are set up and passing. You can add more tests in the `client/src` or 
    npm install
    ```
 
-3. **Set up the database**
+3. **Configure environment (optional for local dev)**
 
    ```bash
-   npm run db:push
+   cp .env.example .env
    ```
 
 4. **Start development server**
@@ -112,7 +112,7 @@ All tests are set up and passing. You can add more tests in the `client/src` or 
    npm run dev
    ```
 
-The application will be available at `http://localhost:5173`
+The application will be available at `http://localhost:5000`
 
 ## 🔧 Available Scripts
 
@@ -123,7 +123,64 @@ The application will be available at `http://localhost:5173`
 - `npm run start` - Start production server
 - `npm run check` - Run TypeScript type checking
 - `npm run clean` - Clean build artifacts
-- `npm run db:push` - Push database schema changes
+- `npm run db:push` - Push database schema changes (requires `DATABASE_URL`)
+
+## 🚀 Production Deployment
+
+### Environment Variables
+
+Copy `.env.example` and configure for your environment:
+
+| Variable | Required | Description |
+|----------|----------|-------------|
+| `PORT` | No (default `5000`) | HTTP port |
+| `NODE_ENV` | Yes | Must be `production` |
+| `TRUST_PROXY` | No | Set to `1` behind nginx/Caddy/load balancer |
+| `DATABASE_URL` | No | Only needed for future PostgreSQL integration |
+
+### Build and Run
+
+```bash
+npm ci
+npm run build
+npm start
+```
+
+Verify the deployment:
+
+```bash
+curl http://localhost:5000/health
+# {"status":"ok","uptime":...}
+```
+
+### Docker
+
+```bash
+docker build -t portfolio .
+docker run -p 5000:5000 -e NODE_ENV=production portfolio
+```
+
+Or with Docker Compose:
+
+```bash
+docker compose up --build
+```
+
+### Reverse Proxy (VPS)
+
+When deploying behind nginx, set `TRUST_PROXY=1` and use the example config in [`deploy/nginx.conf.example`](deploy/nginx.conf.example).
+
+### CI/CD
+
+GitHub Actions runs type checking, tests, and build on every push and pull request. Docker image build runs on pushes to `main`.
+
+### Static-Only Deployment
+
+If you only need the frontend without the Express API, build the client and deploy `dist/public/` to any static host (Vercel, Netlify, Cloudflare Pages):
+
+```bash
+npm run build:client
+```
 
 ## 📁 Project Structure
 

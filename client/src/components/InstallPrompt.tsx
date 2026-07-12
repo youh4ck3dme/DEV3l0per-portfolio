@@ -101,8 +101,8 @@ export default function InstallPrompt() {
             </div>
 
             <p className="font-mono text-xs text-[#888888] mb-4">
-              Install ./d3v3l0p3r as an app for faster access and offline
-              support.
+              Install ./d3v3l0p3r as an app for faster access from your home
+              screen.
             </p>
 
             <div className="flex gap-2">

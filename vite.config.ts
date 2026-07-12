@@ -16,7 +16,7 @@ export default defineConfig({
     outDir: path.resolve(import.meta.dirname, "dist/public"),
     emptyOutDir: true,
     target: "es2022",
-    sourcemap: true,
+    sourcemap: false,
     minify: "esbuild",
     cssMinify: true,
     reportCompressedSize: true,

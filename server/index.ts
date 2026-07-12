@@ -1,8 +1,11 @@
 import express, { type Request, Response, NextFunction } from "express";
+import { createServer, type Server } from "http";
+import { loadEnv } from "./env";
+import { registerProductionMiddleware } from "./middleware";
 import { registerRoutes } from "./routes";
 import { serveStatic } from "./static";
-import { createServer } from "http";
 
+const env = loadEnv();
 const app = express();
 const httpServer = createServer(app);
 
@@ -12,20 +15,22 @@ declare module "http" {
   }
 }
 
+if (env.NODE_ENV === "production") {
+  registerProductionMiddleware(app, env);
+}
+
 app.use(
   express.json({
     verify: (req, _res, buf) => {
       req.rawBody = buf;
     },
-  })
+  }),
 );
 
 app.use(express.urlencoded({ extended: false }));
 
 /**
  * Logs a message with timestamp and source prefix.
- * @param {string} message - The message to log
- * @param {string} [source="express"] - The source of the log message
  */
 export function log(message: string, source = "express") {
   const formattedTime = new Date().toLocaleTimeString("en-US", {
@@ -41,7 +46,7 @@ export function log(message: string, source = "express") {
 app.use((req, res, next) => {
   const start = Date.now();
   const path = req.path;
-  let capturedJsonResponse: Record<string, any> | undefined = undefined;
+  let capturedJsonResponse: Record<string, unknown> | undefined = undefined;
 
   const originalResJson = res.json;
   res.json = function (bodyJson, ...args) {
@@ -64,6 +69,22 @@ app.use((req, res, next) => {
   next();
 });
 
+function registerGracefulShutdown(server: Server): void {
+  const shutdown = (signal: string) => {
+    log(`Received ${signal}, shutting down gracefully`);
+    server.close((error) => {
+      if (error) {
+        console.error("Error during shutdown:", error);
+        process.exit(1);
+      }
+      process.exit(0);
+    });
+  };
+
+  process.on("SIGTERM", () => shutdown("SIGTERM"));
+  process.on("SIGINT", () => shutdown("SIGINT"));
+}
+
 (async () => {
   await registerRoutes(httpServer, app);
 
@@ -71,33 +92,27 @@ app.use((req, res, next) => {
     const status = err.status || err.statusCode || 500;
     const message = err.message || "Internal Server Error";
 
-    log(`Error: ${message}`, "error");
+    console.error(`Error: ${message}`);
     res.status(status).json({ message });
   });
 
-  // importantly only setup vite in development and after
-  // setting up all the other routes so the catch-all route
-  // doesn't interfere with the other routes
-  if (process.env.NODE_ENV === "production") {
+  if (env.NODE_ENV === "production") {
     await serveStatic(app);
   } else {
     const { setupVite } = await import("./vite");
     await setupVite(httpServer, app);
   }
 
-  // ALWAYS serve the app on the port specified in the environment variable PORT
-  // Other ports are firewalled. Default to 5000 if not specified.
-  // this serves both the API and the client.
-  // It is the only port that is not firewalled.
-  const port = parseInt(process.env.PORT || "5000", 10);
   httpServer.listen(
     {
-      port,
+      port: env.PORT,
       host: "0.0.0.0",
       reusePort: true,
     },
     () => {
-      log(`serving on port ${port}`);
-    }
+      log(`serving on port ${env.PORT}`);
+    },
   );
+
+  registerGracefulShutdown(httpServer);
 })();

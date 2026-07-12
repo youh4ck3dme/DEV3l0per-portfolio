@@ -1,0 +1,15 @@
+node_modules
+dist
+.git
+.github
+test-results
+attached_assets
+*.md
+.env
+.env.*
+!.env.example
+.cursor
+.local
+*.log
+coverage
+playwright-report
