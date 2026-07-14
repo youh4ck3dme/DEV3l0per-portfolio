@@ -51,7 +51,7 @@ export default function Navigation() {
         data-testid="navigation"
       >
         <div
-          className={`flex items-center gap-2 px-2 py-2 border border-[rgba(255,255,255,0.08)] bg-[#0A0A0A]/90 backdrop-blur-sm transition-all duration-300 ${
+          className={`flex items-center gap-2 px-2 py-2 border border-[rgba(255,255,255,0.08)] rounded-lg bg-[#0A0A0A]/90 backdrop-blur-sm transition-all duration-300 ${
             isScrolled ? "scale-95" : "scale-100"
           }`}
         >

@@ -96,7 +96,7 @@ export default function BootLoader({ onComplete, duration = 3000 }: BootLoaderPr
             <span className="terminal-cursor" />
           </div>
 
-          <div className="relative h-1 w-full bg-[#0A0A0A] border border-[rgba(255,255,255,0.08)]">
+          <div className="relative h-1 w-full bg-[#0A0A0A] border border-[rgba(255,255,255,0.08)] rounded-sm overflow-hidden">
             <motion.div
               className="absolute top-0 left-0 h-full bg-[#00FF00]"
               initial={{ width: 0 }}

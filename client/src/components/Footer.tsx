@@ -76,7 +76,7 @@ export default function Footer() {
                 <button
                   key={link.label}
                   onClick={() => console.log(`${link.label} clicked`)}
-                  className="w-10 h-10 flex items-center justify-center border border-[rgba(255,255,255,0.08)] text-[#888888] hover:text-[#00FFFF] hover:border-[#00FFFF]/30 transition-colors"
+                  className="w-10 h-10 flex items-center justify-center border border-[rgba(255,255,255,0.08)] rounded-md text-[#888888] hover:text-[#00FFFF] hover:border-[#00FFFF]/30 transition-colors"
                   data-testid={`footer-social-${link.label.toLowerCase()}`}
                   aria-label={link.label}
                 >

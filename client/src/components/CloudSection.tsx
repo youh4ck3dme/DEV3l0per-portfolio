@@ -58,11 +58,11 @@ export default function CloudSection() {
                 ease: [0.16, 1, 0.3, 1],
                 delay: index * 0.1,
               }}
-              className="p-6 bg-[#0A0A0A] border border-[rgba(255,255,255,0.08)] hover-elevate"
+              className="p-6 bg-[#0A0A0A] border border-[rgba(255,255,255,0.08)] rounded-lg hover-elevate"
               data-testid={`cloud-service-${service.name.toLowerCase()}`}
             >
               <div className="flex items-start justify-between mb-4">
-                <div className="w-10 h-10 flex items-center justify-center border border-[rgba(255,255,255,0.08)] text-[#00FFFF]">
+                <div className="w-10 h-10 flex items-center justify-center border border-[rgba(255,255,255,0.08)] rounded-md text-[#00FFFF]">
                   <service.icon className="w-5 h-5" />
                 </div>
                 <div className="flex items-center gap-2">
@@ -108,7 +108,7 @@ export default function CloudSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1], delay: 0.5 }}
-          className="mt-8 p-6 bg-[#0A0A0A] border border-[rgba(255,255,255,0.08)]"
+          className="mt-8 p-6 bg-[#0A0A0A] border border-[rgba(255,255,255,0.08)] rounded-lg"
         >
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div>

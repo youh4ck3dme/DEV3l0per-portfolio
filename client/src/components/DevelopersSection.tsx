@@ -85,11 +85,11 @@ export default function DevelopersSection() {
                 ease: [0.16, 1, 0.3, 1],
                 delay: index * 0.1,
               }}
-              className="p-6 bg-[#030303] border border-[rgba(255,255,255,0.08)] hover-elevate"
+              className="p-6 bg-[#030303] border border-[rgba(255,255,255,0.08)] rounded-lg hover-elevate"
               data-testid={`developer-${member.id}`}
             >
               <div className="flex items-start gap-4">
-                <div className="w-16 h-16 flex items-center justify-center border border-[rgba(255,255,255,0.08)] font-mono text-xl text-[#00FFFF] bg-[#0A0A0A]">
+                <div className="w-16 h-16 flex items-center justify-center border border-[rgba(255,255,255,0.08)] rounded-md font-mono text-xl text-[#00FFFF] bg-[#0A0A0A]">
                   {member.avatar}
                 </div>
 

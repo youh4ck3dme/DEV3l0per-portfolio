@@ -75,10 +75,10 @@ export default function InstallPrompt() {
           className="fixed bottom-4 left-4 right-4 md:left-auto md:right-4 md:w-96 z-50"
           data-testid="install-prompt"
         >
-          <div className="p-4 bg-[#0A0A0A] border border-[rgba(255,255,255,0.08)]">
+          <div className="p-4 bg-[#0A0A0A] border border-[rgba(255,255,255,0.08)] rounded-lg">
             <div className="flex items-start justify-between gap-4 mb-4">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 flex items-center justify-center border border-[#00FF00]/30 bg-[#00FF00]/10">
+                <div className="w-10 h-10 flex items-center justify-center border border-[#00FF00]/30 bg-[#00FF00]/10 rounded-md">
                   <Terminal className="w-5 h-5 text-[#00FF00]" />
                 </div>
                 <div>
@@ -110,7 +110,7 @@ export default function InstallPrompt() {
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 onClick={handleInstall}
-                className="flex-1 px-4 py-2 font-mono text-xs uppercase tracking-widest bg-[#00FF00] text-[#030303] border border-[#00FF00] flex items-center justify-center gap-2"
+                className="flex-1 px-4 py-2 font-mono text-xs uppercase tracking-widest bg-[#00FF00] text-[#030303] border border-[#00FF00] rounded-md flex items-center justify-center gap-2"
                 data-testid="button-install-app"
               >
                 <Download className="w-3 h-3" />
@@ -120,7 +120,7 @@ export default function InstallPrompt() {
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 onClick={handleDismiss}
-                className="px-4 py-2 font-mono text-xs uppercase tracking-widest bg-transparent text-[#888888] border border-[rgba(255,255,255,0.08)]"
+                className="px-4 py-2 font-mono text-xs uppercase tracking-widest bg-transparent text-[#888888] border border-[rgba(255,255,255,0.08)] rounded-md"
                 data-testid="button-later-install"
               >
                 LATER

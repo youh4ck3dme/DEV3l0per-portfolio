@@ -34,12 +34,12 @@ const CreditCard = memo(function CreditCard({
 
   return (
     <motion.div
-      className="relative w-[320px] h-[200px] flex-shrink-0"
+      className="relative w-[320px] h-[200px] flex-shrink-0 rounded-lg overflow-hidden"
       whileHover={{ scale: 1.02 }}
       data-testid={`credit-card-${card.id}`}
     >
       <div
-        className={`absolute inset-0 p-6 border border-[rgba(255,255,255,0.08)] transition-opacity duration-300 ${
+        className={`absolute inset-0 p-6 border border-[rgba(255,255,255,0.08)] rounded-lg transition-opacity duration-300 ${
           isScanned ? "opacity-0" : "opacity-100"
         }`}
         style={{ background: card.gradient }}
@@ -48,7 +48,7 @@ const CreditCard = memo(function CreditCard({
           <div className="font-mono text-xs uppercase tracking-widest text-white/80">
             {card.logo}
           </div>
-          <div className="w-10 h-6 bg-gradient-to-r from-yellow-400 to-yellow-200 opacity-80" />
+          <div className="w-10 h-6 bg-gradient-to-r from-yellow-400 to-yellow-200 opacity-80 rounded-sm" />
         </div>
 
         <div className="font-mono text-lg tracking-widest text-white mb-6">
@@ -76,7 +76,7 @@ const CreditCard = memo(function CreditCard({
       </div>
 
       <div
-        className={`absolute inset-0 p-6 bg-[#0A0A0A] border border-[#00FFFF] transition-opacity duration-300 overflow-hidden ${
+        className={`absolute inset-0 p-6 bg-[#0A0A0A] border border-[#00FFFF] rounded-lg transition-opacity duration-300 overflow-hidden ${
           isScanned ? "opacity-100" : "opacity-0"
         }`}
       >

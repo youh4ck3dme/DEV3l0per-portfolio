@@ -92,7 +92,7 @@ export default function ProjectsSection() {
               <button
                 key={status}
                 onClick={() => setFilter(status)}
-                className={`px-4 py-2 font-mono text-xs uppercase tracking-widest border transition-colors ${
+                className={`px-4 py-2 font-mono text-xs uppercase tracking-widest border rounded-md transition-colors ${
                   filter === status
                     ? 'bg-[#EDEDED] text-[#030303] border-[#EDEDED]'
                     : 'bg-transparent text-[#888888] border-[rgba(255,255,255,0.08)] hover:text-[#EDEDED]'
@@ -144,7 +144,7 @@ export default function ProjectsSection() {
                       {project.tech.map((tech) => (
                         <span
                           key={tech}
-                          className="px-2 py-1 font-mono text-xs uppercase tracking-widest text-[#444444] border border-[rgba(255,255,255,0.08)]"
+                          className="px-2 py-1 font-mono text-xs uppercase tracking-widest text-[#444444] border border-[rgba(255,255,255,0.08)] rounded-md"
                         >
                           {tech}
                         </span>

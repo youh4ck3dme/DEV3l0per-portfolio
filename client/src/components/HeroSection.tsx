@@ -101,7 +101,7 @@ export default function HeroSection() {
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             onClick={() => console.log("View Projects clicked")}
-            className="px-8 py-3 font-mono text-sm uppercase tracking-widest bg-[#EDEDED] text-[#030303] border border-[#EDEDED] hover-elevate"
+            className="px-8 py-3 font-mono text-sm uppercase tracking-widest bg-[#EDEDED] text-[#030303] border border-[#EDEDED] rounded-lg hover-elevate"
             data-testid="button-view-projects"
           >
             VIEW PROJECTS
@@ -110,7 +110,7 @@ export default function HeroSection() {
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             onClick={() => console.log("Contact clicked")}
-            className="px-8 py-3 font-mono text-sm uppercase tracking-widest bg-transparent text-[#EDEDED] border border-[rgba(255,255,255,0.08)] hover-elevate"
+            className="px-8 py-3 font-mono text-sm uppercase tracking-widest bg-transparent text-[#EDEDED] border border-[rgba(255,255,255,0.08)] rounded-lg hover-elevate"
             data-testid="button-contact-hero"
           >
             CONTACT

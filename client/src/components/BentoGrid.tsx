@@ -52,7 +52,7 @@ function BentoCard({ icon: Icon, title, description, size = 'md', accent = '#00F
   return (
     <motion.div
       ref={cardRef}
-      className={`relative p-6 bg-[#0A0A0A] border border-[rgba(255,255,255,0.08)] ${sizeClasses[size]} hover-elevate overflow-visible`}
+      className={`relative p-6 bg-[#0A0A0A] border border-[rgba(255,255,255,0.08)] rounded-lg ${sizeClasses[size]} hover-elevate overflow-visible`}
       style={{
         transform: `perspective(1000px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`,
         transition: 'transform 0.1s ease-out',
@@ -69,7 +69,7 @@ function BentoCard({ icon: Icon, title, description, size = 'md', accent = '#00F
 
       <div className="relative z-10 h-full flex flex-col">
         <div
-          className="w-10 h-10 flex items-center justify-center border border-[rgba(255,255,255,0.08)] mb-4"
+          className="w-10 h-10 flex items-center justify-center border border-[rgba(255,255,255,0.08)] rounded-md mb-4"
           style={{ color: accent }}
         >
           <Icon className="w-5 h-5" />

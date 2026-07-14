@@ -44,7 +44,7 @@ export default function OfflineIndicator() {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -50 }}
           transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-          className={`fixed top-20 left-1/2 -translate-x-1/2 z-50 px-4 py-2 border ${
+          className={`fixed top-20 left-1/2 -translate-x-1/2 z-50 px-4 py-2 border rounded-lg ${
             isOnline
               ? "bg-[#00FF00]/10 border-[#00FF00]/30"
               : "bg-[#FF0000]/10 border-[#FF0000]/30"
