@@ -4,7 +4,8 @@ const envSchema = z.object({
   NODE_ENV: z
     .enum(["development", "production", "test"])
     .default("development"),
-  PORT: z.coerce.number().int().min(1).max(65535).default(5000),
+  // Default 3000 — macOS AirPlay Receiver occupies port 5000 and returns 403
+  PORT: z.coerce.number().int().min(1).max(65535).default(3000),
   TRUST_PROXY: z
     .enum(["0", "1", "true", "false"])
     .default("0")

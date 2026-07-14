@@ -112,7 +112,9 @@ All tests are set up and passing. You can add more tests in the `client/src` or 
    npm run dev
    ```
 
-The application will be available at `http://localhost:5000`
+The application will be available at `http://localhost:3000`
+
+> **macOS note:** Port `5000` is often taken by AirPlay Receiver (`AirTunes`), which responds with HTTP 403. This project defaults to port `3000` for local development.
 
 ## 🔧 Available Scripts
 
@@ -133,7 +135,7 @@ Copy `.env.example` and configure for your environment:
 
 | Variable | Required | Description |
 |----------|----------|-------------|
-| `PORT` | No (default `5000`) | HTTP port |
+| `PORT` | No (default `3000`) | HTTP port (avoid `5000` on macOS — AirPlay conflict) |
 | `NODE_ENV` | Yes | Must be `production` |
 | `TRUST_PROXY` | No | Set to `1` behind nginx/Caddy/load balancer |
 | `DATABASE_URL` | No | Only needed for future PostgreSQL integration |
@@ -149,7 +151,7 @@ npm start
 Verify the deployment:
 
 ```bash
-curl http://localhost:5000/health
+curl http://localhost:${PORT:-3000}/health
 # {"status":"ok","uptime":...}
 ```
 
@@ -157,7 +159,7 @@ curl http://localhost:5000/health
 
 ```bash
 docker build -t portfolio .
-docker run -p 5000:5000 -e NODE_ENV=production portfolio
+docker run -p 5000:5000 -e NODE_ENV=production -e PORT=5000 portfolio
 ```
 
 Or with Docker Compose:
