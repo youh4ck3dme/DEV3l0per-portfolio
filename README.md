@@ -172,7 +172,11 @@ When deploying behind nginx, set `TRUST_PROXY=1` and use the example config in [
 
 ### CI/CD
 
-GitHub Actions runs type checking, tests, and build on every push and pull request. Docker image build runs on pushes to `main`.
+GitHub Actions is disabled (account billing lock). Run checks locally before pushing:
+
+```bash
+npm run check && npm test -- --run && npm run build
+```
 
 ### Static-Only Deployment
 
