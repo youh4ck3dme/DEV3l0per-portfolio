@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { ExternalLink, Github, ArrowRight } from 'lucide-react';
+import { ExternalLink, ArrowRight } from 'lucide-react';
 
 interface Project {
   id: string;
@@ -9,11 +9,22 @@ interface Project {
   tech: string[];
   status: 'live' | 'development' | 'archived';
   year: string;
+  url?: string;
 }
 
 const projects: Project[] = [
   {
     id: '001',
+    title: 'PROPULSE_RENT',
+    description:
+      'CRM dashboard for real-estate brokers and rental property managers. Lead pipeline, payment tracking, property analytics. Built for ROOF21. Live demo is login-gated.',
+    tech: ['Vite', 'TypeScript', 'React', 'shadcn/ui', 'Tailwind CSS'],
+    status: 'live',
+    year: '2026',
+    url: 'https://propulse-rent.lovable.app',
+  },
+  {
+    id: '002',
     title: 'NEURAL_SYNC',
     description: 'Real-time collaborative code editor with AI-powered suggestions and syntax highlighting for 50+ languages.',
     tech: ['React', 'WebSocket', 'Monaco', 'GPT-4'],
@@ -21,7 +32,7 @@ const projects: Project[] = [
     year: '2024',
   },
   {
-    id: '002',
+    id: '003',
     title: 'VOID_COMMERCE',
     description: 'Headless e-commerce platform with brutalist design philosophy. 99.9% uptime, sub-100ms response times.',
     tech: ['Next.js', 'Stripe', 'PostgreSQL', 'Redis'],
@@ -29,7 +40,7 @@ const projects: Project[] = [
     year: '2024',
   },
   {
-    id: '003',
+    id: '004',
     title: 'QUANTUM_CMS',
     description: 'Content management system designed for developers who hate content management systems.',
     tech: ['TypeScript', 'GraphQL', 'Prisma', 'Vercel'],
@@ -37,7 +48,7 @@ const projects: Project[] = [
     year: '2024',
   },
   {
-    id: '004',
+    id: '005',
     title: 'DARK_ANALYTICS',
     description: 'Privacy-first analytics dashboard. No cookies, no tracking, just data.',
     tech: ['Go', 'ClickHouse', 'React', 'D3.js'],
@@ -45,7 +56,7 @@ const projects: Project[] = [
     year: '2023',
   },
   {
-    id: '005',
+    id: '006',
     title: 'CYBER_AUTH',
     description: 'Zero-knowledge authentication system with biometric integration and hardware key support.',
     tech: ['Rust', 'WebAuthn', 'ZK-SNARKs', 'HSM'],
@@ -106,7 +117,83 @@ export default function ProjectsSection() {
         </motion.div>
 
         <div className="border-t border-[rgba(255,255,255,0.08)]">
-          {filteredProjects.map((project, index) => (
+          {filteredProjects.map((project, index) => {
+            const rowClassName = `group border-b border-[rgba(255,255,255,0.08)] py-8 hover-elevate ${
+              project.url ? 'cursor-pointer' : ''
+            }`;
+
+            const rowContent = (
+              <div className="flex flex-col md:flex-row md:items-center gap-4 md:gap-8">
+                <div className="flex items-center gap-4 md:w-24">
+                  <span className="font-mono text-xs text-[#444444]">
+                    {project.id}
+                  </span>
+                  <div
+                    className="w-2 h-2"
+                    style={{ backgroundColor: statusColors[project.status] }}
+                  />
+                </div>
+
+                <div className="flex-1">
+                  <h3 className="font-mono text-xl md:text-2xl font-bold tracking-tight text-[#EDEDED] mb-2 group-hover:text-[#00FFFF] transition-colors">
+                    {project.title}
+                  </h3>
+                  <p className="font-mono text-sm text-[#888888] mb-4 max-w-2xl">
+                    {project.description}
+                  </p>
+                  <div className="flex flex-wrap gap-2">
+                    {project.tech.map((tech) => (
+                      <span
+                        key={tech}
+                        className="px-2 py-1 font-mono text-xs uppercase tracking-widest text-[#444444] border border-[rgba(255,255,255,0.08)]"
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-4 md:w-32 justify-end">
+                  <span className="font-mono text-xs text-[#444444]">
+                    {project.year}
+                  </span>
+                  {project.url && (
+                    <motion.div
+                      animate={{
+                        x: hoveredProject === project.id ? 0 : -10,
+                        opacity: hoveredProject === project.id ? 1 : 0,
+                      }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      <ExternalLink className="w-5 h-5 text-[#00FFFF]" />
+                    </motion.div>
+                  )}
+                </div>
+              </div>
+            );
+
+            return project.url ? (
+              <motion.a
+                key={project.id}
+                href={project.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{
+                  duration: 0.4,
+                  ease: [0.16, 1, 0.3, 1],
+                  delay: index * 0.05,
+                }}
+                onMouseEnter={() => setHoveredProject(project.id)}
+                onMouseLeave={() => setHoveredProject(null)}
+                className={`block no-underline text-inherit ${rowClassName}`}
+                data-testid={`project-${project.id}`}
+              >
+                {rowContent}
+              </motion.a>
+            ) : (
               <motion.div
                 key={project.id}
                 initial={{ opacity: 0, y: 20 }}
@@ -119,56 +206,13 @@ export default function ProjectsSection() {
                 }}
                 onMouseEnter={() => setHoveredProject(project.id)}
                 onMouseLeave={() => setHoveredProject(null)}
-                className="group border-b border-[rgba(255,255,255,0.08)] py-8 cursor-pointer hover-elevate"
+                className={rowClassName}
                 data-testid={`project-${project.id}`}
               >
-                <div className="flex flex-col md:flex-row md:items-center gap-4 md:gap-8">
-                  <div className="flex items-center gap-4 md:w-24">
-                    <span className="font-mono text-xs text-[#444444]">
-                      {project.id}
-                    </span>
-                    <div
-                      className="w-2 h-2"
-                      style={{ backgroundColor: statusColors[project.status] }}
-                    />
-                  </div>
-
-                  <div className="flex-1">
-                    <h3 className="font-mono text-xl md:text-2xl font-bold tracking-tight text-[#EDEDED] mb-2 group-hover:text-[#00FFFF] transition-colors">
-                      {project.title}
-                    </h3>
-                    <p className="font-mono text-sm text-[#888888] mb-4 max-w-2xl">
-                      {project.description}
-                    </p>
-                    <div className="flex flex-wrap gap-2">
-                      {project.tech.map((tech) => (
-                        <span
-                          key={tech}
-                          className="px-2 py-1 font-mono text-xs uppercase tracking-widest text-[#444444] border border-[rgba(255,255,255,0.08)]"
-                        >
-                          {tech}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div className="flex items-center gap-4 md:w-32 justify-end">
-                    <span className="font-mono text-xs text-[#444444]">
-                      {project.year}
-                    </span>
-                    <motion.div
-                      animate={{
-                        x: hoveredProject === project.id ? 0 : -10,
-                        opacity: hoveredProject === project.id ? 1 : 0,
-                      }}
-                      transition={{ duration: 0.2 }}
-                    >
-                      <ArrowRight className="w-5 h-5 text-[#00FFFF]" />
-                    </motion.div>
-                  </div>
-                </div>
+                {rowContent}
               </motion.div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>
